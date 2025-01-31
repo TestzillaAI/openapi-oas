@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: Vapi API
+  description: OpenAPI specification for the Vapi.ai API
+  version: 1.0.0
+servers:
+  - url: https://api.vapi.ai
+paths:
+  /assistant:
+    get:
+      summary: Retrieve assistant details
+      description: Fetches details about the assistant from Vapi.ai.
+      operationId: getAssistant
+      responses:
+        "200":
+          description: Successful response with assistant details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier for the assistant.
+                  name:
+                    type: string
+                    description: The name of the assistant.
+                  description:
+                    type: string
+                    description: A brief description of the assistant.
+        "400":
+          description: Bad request, invalid or missing parameters.
+        "404":
+          description: Assistant not found.
+        "500":
+          description: Internal server error.
