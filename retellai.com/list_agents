@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  title: Retell AI API
+  description: API for managing agents in Retell AI.
+  version: 1.0.0
+servers:
+  - url: https://api.retellai.com
+    description: Retell AI API Server
+paths:
+  /list-agents:
+    get:
+      operationId: listAgents
+      summary: Retrieve a list of agents
+      description: Fetches a list of all available agents in Retell AI.
+      responses:
+        "200":
+          description: A list of agents.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAgentsResponse"
+        "401":
+          description: Unauthorized - API key missing or invalid.
+        "500":
+          description: Internal server error.
+      security:
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Use "Authorization: Bearer {your_api_key}" for authentication.'
+  schemas:
+    ListAgentsResponse:
+      type: object
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Agent"
+    Agent:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          description: Unique identifier for the agent.
+        name:
+          type: string
+          description: Name of the agent.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
